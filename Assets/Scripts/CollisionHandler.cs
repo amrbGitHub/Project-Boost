@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Collision : MonoBehaviour
 {
@@ -16,8 +17,14 @@ public class Collision : MonoBehaviour
                 Debug.Log("Hit a Friendly Object");
                 break;
             default:
-                Debug.Log("Hit Other Object");
+                ReloadLevel();
                 break;
         }
+    }
+
+    void ReloadLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }
