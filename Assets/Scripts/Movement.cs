@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Movement : MonoBehaviour
 {
+    
 
-    Rigidbody rb;
    [SerializeField] float thrustForce;
-    [SerializeField] float rotationSpeed;
+   [SerializeField] float rotationSpeed;
+   [SerializeField] AudioClip mainEngine;
     AudioSource thrustSound;
+    Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +34,7 @@ public class Movement : MonoBehaviour
             rb.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
             if (!thrustSound.isPlaying)
             {
-                thrustSound.Play();
+                thrustSound.PlayOneShot(mainEngine);
 
             }
         }
