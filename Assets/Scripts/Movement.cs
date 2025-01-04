@@ -8,6 +8,12 @@ public class Movement : MonoBehaviour
    [SerializeField] float thrustForce;
    [SerializeField] float rotationSpeed;
    [SerializeField] AudioClip mainEngine;
+
+    [SerializeField] ParticleSystem mainThruster;
+    [SerializeField] ParticleSystem rightThruster;
+    [SerializeField] ParticleSystem leftThruster;
+
+
     AudioSource thrustSound;
     Rigidbody rb;
 
@@ -35,12 +41,17 @@ public class Movement : MonoBehaviour
             if (!thrustSound.isPlaying)
             {
                 thrustSound.PlayOneShot(mainEngine);
+                if (!mainThruster.isPlaying)
+                {
+                    mainThruster.Play();
+                }
 
             }
         }
         else
         {
             thrustSound.Stop();
+            mainThruster.Stop();
         }
     }
     /// <summary>
@@ -51,11 +62,30 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             ApplyRotation(rotationSpeed);
+
+            if (!rightThruster.isPlaying)
+            {
+
+                rightThruster.Play();
+            }
+          
         }
         else if ((Input.GetKey(KeyCode.D)))
         {
             ApplyRotation(-rotationSpeed);
+            if (!leftThruster.isPlaying)
+            {
+                leftThruster.Play();
+            }
+
         }
+        else
+        {
+            rightThruster.Stop();
+            leftThruster.Stop();
+        }
+        
+       
     }
     /// <summary>
     /// This method is used to apply the rotation to a specific object
@@ -66,6 +96,9 @@ public class Movement : MonoBehaviour
         rb.freezeRotation = true; // freezing rotation so we can manually rotate
         transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);
         rb.freezeRotation = false; // unfreezing rotation so the physics system and take over
+
+        
+            
     }
 
     
