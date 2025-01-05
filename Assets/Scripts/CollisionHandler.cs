@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,8 +14,16 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] ParticleSystem crashParticles;
     [SerializeField] ParticleSystem finishParticles;
 
+
+
+    
     AudioSource mainAudio;
+
+    const string DEBUG = "DEBUG: ";
+
     bool isTransitioning = false;
+
+    bool toggleCollisions = true;
 
     private void Start()
     {
@@ -21,7 +31,7 @@ public class CollisionHandler : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (isTransitioning){return;}
+        if (isTransitioning || !toggleCollisions){return;}
         switch (collision.gameObject.tag)
         {
             case "Finish":
@@ -34,7 +44,17 @@ public class CollisionHandler : MonoBehaviour
                StartCrashSequence();
                 break;
         }
+
     }
+
+    private void Update()
+    {
+
+        DebugToggleColliders();
+        DebugLoadNextLevel();
+    }
+
+  
     void StartNextLevelSequence()
     {
         // TODO add sfx when next level (Done)
@@ -81,5 +101,30 @@ public class CollisionHandler : MonoBehaviour
 
         SceneManager.LoadScene(nextSceneIndex);
 
+    }
+    void DebugToggleColliders()
+    {
+        if (Input.GetKeyDown(KeyCode.C) && toggleCollisions == true)
+        {
+            Debug.Log( DEBUG + "Collision Disabled");
+            toggleCollisions = false;
+          
+
+        }
+        else if (Input.GetKeyDown(KeyCode.C) && !toggleCollisions)
+        {
+            Debug.Log(DEBUG + "Collision Enabled");
+            toggleCollisions = true;
+
+        }
+    }
+
+    void DebugLoadNextLevel()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log(DEBUG + "Loading Next Level");
+            LoadNextLevel();
+        }
     }
 }

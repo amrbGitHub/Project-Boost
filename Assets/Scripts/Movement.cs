@@ -37,56 +37,75 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
-            if (!thrustSound.isPlaying)
-            {
-                thrustSound.PlayOneShot(mainEngine);
-                if (!mainThruster.isPlaying)
-                {
-                    mainThruster.Play();
-                }
-
-            }
+            StartThrusting();
         }
         else
         {
-            thrustSound.Stop();
-            mainThruster.Stop();
+            StopThrusting();
         }
     }
+
     /// <summary>
     /// This method is used to rotate the object left or right if the player input's A or D
     /// </summary>
+
     void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.A))
         {
-            ApplyRotation(rotationSpeed);
+            StartRotation(rotationSpeed, rightThruster);
 
-            if (!rightThruster.isPlaying)
-            {
-
-                rightThruster.Play();
-            }
-          
         }
         else if ((Input.GetKey(KeyCode.D)))
         {
-            ApplyRotation(-rotationSpeed);
-            if (!leftThruster.isPlaying)
-            {
-                leftThruster.Play();
-            }
-
+            StartRotation(-rotationSpeed, leftThruster);
         }
         else
         {
-            rightThruster.Stop();
-            leftThruster.Stop();
+            StopAllSideThrusting();
         }
-        
-       
+
+
     }
+    void StartThrusting()
+    {
+        rb.AddRelativeForce(Vector3.up * thrustForce * Time.deltaTime);
+        if (!thrustSound.isPlaying)
+        {
+            thrustSound.PlayOneShot(mainEngine);
+            if (!mainThruster.isPlaying)
+            {
+                mainThruster.Play();
+            }
+
+        }
+    }
+
+    void StopThrusting()
+    {
+        thrustSound.Stop();
+        mainThruster.Stop();
+    }
+
+ 
+    void StartRotation(float rotationSpeed, ParticleSystem thruster)
+    {
+        ApplyRotation(rotationSpeed);
+
+        if (!thruster.isPlaying)
+        {
+
+            thruster.Play();
+        }
+    }
+    void StopAllSideThrusting()
+    {
+        rightThruster.Stop();
+        leftThruster.Stop();
+    }
+
+ 
+
     /// <summary>
     /// This method is used to apply the rotation to a specific object
     /// </summary>
@@ -96,10 +115,10 @@ public class Movement : MonoBehaviour
         rb.freezeRotation = true; // freezing rotation so we can manually rotate
         transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);
         rb.freezeRotation = false; // unfreezing rotation so the physics system and take over
-
-        
             
     }
+
+ 
 
     
 }
