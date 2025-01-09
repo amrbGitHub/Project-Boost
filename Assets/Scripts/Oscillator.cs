@@ -17,16 +17,23 @@ public class Oscillator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float cycles = Time.time / period; 
+        Oscillate(period);
+    }
 
+    private void Oscillate(float period)
+    {
+        // can be done as if (period <= 0) or if (period <= Mathf.epsilon), I just wanted to try something new
+        if (Mathf.Approximately(period, 0f)) { return; }
+        float cycles = Time.time / period;
         // tau is 2 pi
         const float tau = Mathf.PI * 2; // 6.283
         float rawSinWave = Mathf.Sin(cycles * tau); // going from -1 to 1
         // because sin waves go from -1-1 we want the movement factor range to be from 0-1 so we +1f and then /2 (-1 + 1 = 0, 1+1 = 2) / 2 = 0,1
-        movementFactor = (rawSinWave + 1f) / 2f; 
+        movementFactor = (rawSinWave + 1f) / 2f;
 
 
         Vector3 offset = movementVector * movementFactor;
         transform.position = startingPosition + offset;
+
     }
 }
