@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 public class Movement : MonoBehaviour
 {
@@ -17,6 +15,7 @@ public class Movement : MonoBehaviour
     AudioSource thrustSound;
     Rigidbody rb;
 
+    public bool turnOffRotation;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +27,14 @@ public class Movement : MonoBehaviour
     void Update()
     {
         ProcessThrust();
-        ProcessRotation();
+        if (turnOffRotation)
+        {
+            return;
+        }
+        else
+        {
+            ProcessRotation();
+        }
     }
     /// <summary>
     /// This method is used to add force upwards to an object if the player presses space

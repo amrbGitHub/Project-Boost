@@ -49,9 +49,16 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Wall")
+        switch (other.gameObject.tag)
         {
-            StartCrashSequence();
+            case "Wall":
+                StartCrashSequence();
+                break;
+            case "Finish":
+                StartNextLevelSequence();
+                break;
+            default:
+                break;
         }
     }
 
