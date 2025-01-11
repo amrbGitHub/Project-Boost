@@ -1,0 +1,22 @@
+.panel {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.menu {
+    align-items: center;
+    width: 400px;
+    height: auto;
+}
+
+.unity-button {
+    background-color: rgba(0, 0, 0, 0.27);
+}
+
+.text {
+}
+
+.unity-button:hover {
+    background-color: rgb(16, 166, 157);
+    display: flex;
+    scale: 1.1 1.1;
+}
