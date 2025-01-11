@@ -14,3 +14,7 @@ Project Boost is a simple 2.5D game about a rocket getting from start to finish 
 A/D to rotate Left/Right
 
 Space/Left Cick to Ascend
+
+### Debug Commands
+C - Disables Colliders
+L - Loads Next Level
