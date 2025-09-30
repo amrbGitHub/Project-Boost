@@ -7,7 +7,6 @@ Project Boost is a simple 2.5D game about a rocket getting from start to finish 
 
 
 
-*This project is based on the Complete C# Unity Game Developer 3D (Updated to Unity 6) Course by gamedev.tv.*
 
 ### Controls
 
